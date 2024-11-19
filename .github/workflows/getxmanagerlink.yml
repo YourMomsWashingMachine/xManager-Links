@@ -28,7 +28,7 @@ jobs:
         run: |
           unzip xManager.apk "resources.arsc"
           LINKS=$(grep -a "githubusercontent.com" resources.arsc | iconv -c -f UTF8 -t ascii//TRANSLIT | sed -rn 's/.*(https:\/\/gist\.githubusercontent\.com\/xC3FFF0E\/.*\/raw).*/\1/p')
-          echo "version=$(curl -s $LINKS | jq -r ".Stock_Patched[-1].Title" >> $GITHUB_ENV
+          echo "version=$(curl -s $LINKS | jq -r '.Stock_Patched[-1].Title')" >> $GITHUB_ENV
           curl -s $LINKS | jq -r ".Stock_Patched[-1].Mirror" > ${{ github.workspace }}-changelog.txt
           
       - name: Publish release
