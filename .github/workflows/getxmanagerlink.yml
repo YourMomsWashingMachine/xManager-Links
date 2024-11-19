@@ -31,6 +31,8 @@ jobs:
           LINKS=$(grep -a "githubusercontent.com" resources.arsc | iconv -c -f UTF8 -t ascii//TRANSLIT | sed -rn 's/.*(https:\/\/gist\.githubusercontent\.com\/xC3FFF0E\/.*\/raw).*/\1/p')
           echo "version=$(curl -s $LINKS | jq -r '.Stock_Patched[-1].Title')" >> "$GITHUB_OUTPUT"
           curl -s $LINKS | jq -r ".Stock_Patched[-1].Mirror" > ${{ github.workspace }}-changelog.txt
+          echo ${{ steps.extract-link.outputs.version }}
+          echo ${{ github.ref_name }}
           
       - name: Publish release
         uses: softprops/action-gh-release@v2
