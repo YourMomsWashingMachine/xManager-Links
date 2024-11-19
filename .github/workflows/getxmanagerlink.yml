@@ -28,17 +28,18 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Extract link
+        id: extract-link
         run: |
           unzip xManager.apk "resources.arsc"
           LINKS=$(grep -a "githubusercontent.com" resources.arsc | iconv -c -f UTF8 -t ascii//TRANSLIT | sed -rn 's/.*(https:\/\/gist\.githubusercontent\.com\/xC3FFF0E\/.*\/raw).*/\1/p')
-          echo "version=$(curl -s $LINKS | jq -r '.Stock_Patched[-1].Title')" >> $GITHUB_ENV
+          echo "version=$(curl -s $LINKS | jq -r '.Stock_Patched[-1].Title')" >> "$GITHUB_OUTPUT"
           curl -s $LINKS | jq -r ".Stock_Patched[-1].Mirror" > ${{ github.workspace }}-changelog.txt
           
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
           body_path: ${{ github.workspace }}-changelog.txt
-          tag_name: ${{ version }}
+          tag_name: ${{ steps.extract-link.outputs.version }}
           # repository: my_gh_org/my_gh_repo
           # note you'll typically need to create a personal access token
           # with permissions to create releases in the other repo
