@@ -16,6 +16,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
       # Runs a single command using the runners shell
       - name: Download xManager
         run: wget https://github.com/Team-xManager/xManager/releases/download/5.7/xManager.apk
@@ -29,7 +32,7 @@ jobs:
           
       - name: Publish release
         uses: softprops/action-gh-release@v2
-        # if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           body_path: ${{ github.workspace }}-changelog.txt
           # repository: my_gh_org/my_gh_repo
