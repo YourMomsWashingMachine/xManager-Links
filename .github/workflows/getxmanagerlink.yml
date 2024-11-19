@@ -18,10 +18,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        
+    steps:       
       # Runs a single command using the runners shell
       - name: Download xManager
         run: wget https://github.com/Team-xManager/xManager/releases/download/5.7/xManager.apk
@@ -37,6 +34,7 @@ jobs:
           
       - name: Publish release
         uses: softprops/action-gh-release@v2
+        if: ${{ ${{ github.ref_name }} != ${{ steps.extract-link.outputs.version }} }}
         with:
           body_path: ${{ github.workspace }}-changelog.txt
           tag_name: ${{ steps.extract-link.outputs.version }}
