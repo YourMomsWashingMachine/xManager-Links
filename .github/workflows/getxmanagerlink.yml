@@ -34,7 +34,7 @@ jobs:
           
       - name: Publish release
         uses: softprops/action-gh-release@v2
-        if: ${{ ${{ github.ref_name }} != ${{ steps.extract-link.outputs.version }} }}
+        if: ${{ github.ref_name != steps.extract-link.outputs.version }}
         with:
           body_path: ${{ github.workspace }}-changelog.txt
           tag_name: ${{ steps.extract-link.outputs.version }}
