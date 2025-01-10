@@ -41,8 +41,6 @@ jobs:
           STOCK_VERSION=$(curl -s $LINKS | jq -r '.Stock_Patched[-1].Title')
           echo "version=$STOCK_VERSION" >> "$GITHUB_OUTPUT"
           echo "lastPublishedVersion=$(git describe --tags `git rev-list --tags --max-count=1`)" >> "$GITHUB_OUTPUT"
-          echo $(git describe --tags `git rev-list --tags --max-count=1`)
-          echo $STOCK_VERSION
 
           curl -s $LINKS | jq -r ".Patched_Changelogs[-1].Patched_Changelogs" | sed 2d | (echo -n "> " && cat) > ${{ github.workspace }}-changelog.txt
           
