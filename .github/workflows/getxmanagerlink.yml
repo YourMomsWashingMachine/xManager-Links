@@ -30,7 +30,7 @@ jobs:
     
       # Runs a single command using the runners shell
       - name: Download xManager
-        run: wget https://github.com/Team-xManager/xManager/releases/download/5.7/xManager.apk
+        run: wget https://github.com/Team-xManager/xManager/releases/download/latest/xManager.apk
 
       # Runs a set of commands using the runners shell
       - name: Extract link
